@@ -38,12 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/authenticated").authenticated()
-                .antMatchers("/adminpage").hasRole("ADMIN")
+                .antMatchers("/userdetails").authenticated()
+                .antMatchers("/adminpage/**").hasRole("ADMIN")
                 .antMatchers("/read").hasAnyAuthority("READ_PROFILE")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin()// Указывает страницу логина, если она кастомная
+                .permitAll()
+                .defaultSuccessUrl("/userdetails",true)
                 .permitAll()
                 .and()
                 .logout()

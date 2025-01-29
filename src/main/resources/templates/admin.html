@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Админ панель</title>
+</head>
+<body>
+<h2>Админ панель</h2>
+
+<ul>
+  <li><a th:href="@{/adminpage/showAllUsers}">Показать всех пользователей</a></li>
+  <li><a th:href="@{/adminpage/addNewUser}">Добавить нового пользователя</a></li>
+</ul>
+
+<a href="/userdetails">На главную</a>
+</body>
+</html>

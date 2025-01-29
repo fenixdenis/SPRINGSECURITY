@@ -27,6 +27,10 @@ public class User {
         return roles;
     }
 
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
     public User() {
     }
 
