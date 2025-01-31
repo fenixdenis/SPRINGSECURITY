@@ -32,7 +32,6 @@ public class UsersController {
 
     @GetMapping("/admin")
     public String pageForadmin(ModelMap model){
-
         List<User> allUsers = userService.findAll();
         model.addAttribute("allUsers", allUsers);
         return "admin";
@@ -40,7 +39,6 @@ public class UsersController {
 
         @GetMapping("/admin/showAllUsers")
         public String showAllUsers(ModelMap model) {
-
             List<User> allUsers = userService.findAll();
             model.addAttribute("allUsers", allUsers);
             return "users";
@@ -48,7 +46,6 @@ public class UsersController {
 
         @GetMapping("/admin/addNewUser")
         public String addNewUser(ModelMap model){
-
             User user = new User();
             List<Role> allroles = roleRepository.findAll();
             model.addAttribute("userSave",user);
@@ -58,14 +55,12 @@ public class UsersController {
 
         @PostMapping("/admin/saveUser")
         public String saveUser(@ModelAttribute("userSave") User user ){
-            
             userService.save(user);
             return "redirect:/admin";
         }
 
         @RequestMapping("/admin/updateUser")
         public String updateUser(@RequestParam("userId") int id,ModelMap model){
-
             User user = userService.getUser(id);
             List<Role> allroles = roleRepository.findAll();
             model.addAttribute("userSave",user);
@@ -75,7 +70,6 @@ public class UsersController {
 
         @RequestMapping("/admin/deleteUser")
         public String deleteUser(@RequestParam("userId") int id){
-
             userService.deleteById(id);
             return "redirect:/admin";
         }
@@ -91,9 +85,9 @@ public class UsersController {
         }
 
 
-    @GetMapping("/login")
-    public String login() {
-        return "login"; // Возвращает шаблон login.html
+        @GetMapping("/login")
+        public String login() {
+            return "login"; // Возвращает шаблон login.html
     }
 }
 

@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.Service;
 
-
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,13 +21,10 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService, UserServInterface {
 
-    @Lazy
     private final PasswordEncoder passwordEncoder;
-
     private final UserRepository userRepository;
 
     @Autowired
-
     public UserService( PasswordEncoder passwordEncoder,UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -51,18 +46,14 @@ public class UserService implements UserDetailsService, UserServInterface {
     private Collection<? extends GrantedAuthority> mapRoles(Collection<Role> roles){
         return roles.stream().map(r-> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
-   ;
-
 
     @Transactional
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-
     @Transactional
     public void save(User user) {
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -71,7 +62,6 @@ public class UserService implements UserDetailsService, UserServInterface {
     public User getUser(int id) {
         return userRepository.findById(id);
     }
-
 
     @Transactional
     public User findById(int id) {
