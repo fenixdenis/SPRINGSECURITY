@@ -6,8 +6,6 @@
 <body>
 <h2>Список пользователей</h2>
 
-
-
 <table border="1">
   <thead>
   <tr>
@@ -17,7 +15,6 @@
     <th>Почта</th>
     <th>Роль</th>
     <th>Действия</th>
-    <!-- Добавьте другие колонки -->
   </tr>
   </thead>
   <tbody>
@@ -26,18 +23,17 @@
     <td th:text="${user.username}"></td>
     <td th:text="${user.password}"></td>
     <td th:text="${user.email}"></td>
-
     <td>
       <table>
         <tr th:each="role : ${user.roles}">
           <td th:text="${role.name}"></td>
         </tr>
       </table>
-    <!-- Добавьте другие поля -->
+    </td>
     <td>
-      <a th:href="@{/adminpage/updateUser(userId=${user.id})}">Редактировать</a>
+      <a th:href="@{/admin/updateUser(userId=${user.id})}">Редактировать</a>
       |
-      <a th:href="@{/adminpage/deleteUser(userId=${user.id})}"
+      <a th:href="@{/admin/deleteUser(userId=${user.id})}"
          onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?')">
         Удалить
       </a>
@@ -46,6 +42,15 @@
   </tbody>
 </table>
 
-<a href="/adminpage">Назад</a>
+<a href="/admin">Назад</a>
+
+<!-- Форма для выхода из системы -->
+<form th:action="@{/logout}" method="post">
+  <input type="hidden"
+         th:name="${_csrf.parameterName}"
+         th:value="${_csrf.token}"/>
+  <input type="submit" value="Logout"/>
+</form>
+
 </body>
-</html></html>
+</html>

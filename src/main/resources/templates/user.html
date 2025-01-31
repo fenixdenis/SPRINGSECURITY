@@ -11,6 +11,12 @@
     <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
 
 </div>
-
+<!-- Форма для выхода из системы -->
+<form th:action="@{/logout}" method="post">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"/>
+    <input type="submit" value="Logout"/>
+</form>
 </body>
 </html>

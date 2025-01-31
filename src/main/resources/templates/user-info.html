@@ -24,11 +24,9 @@
     <input type="email" th:field="*{email}" />
   </div>
 
-
   <div>
     <label>Роли:</label>
     <select name="roles" multiple="multiple">
-      <!--/*@thymesVar id="contains" type=""*/-->
       <option th:each="role : ${allRoles}"
               th:value="${role.id}"
               th:text="${role.name}"
@@ -37,11 +35,18 @@
     </select>
   </div>
 
-  <!-- Добавьте другие поля в соответствии с вашей моделью User -->
-
   <button type="submit">Сохранить</button>
 </form>
 
-<a href="/adminpage">Назад</a>
+<a href="/admin">Назад</a>
+
+<!-- Форма для выхода из системы -->
+<form th:action="@{/logout}" method="post" style="margin-top: 20px;">
+  <input type="hidden"
+         th:name="${_csrf.parameterName}"
+         th:value="${_csrf.token}"/>
+  <input type="submit" value="Logout"/>
+</form>
+
 </body>
 </html>

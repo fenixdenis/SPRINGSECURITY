@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-
-
-import ru.kata.spring.boot_security.demo.Service.RoleService;
+import ru.kata.spring.boot_security.demo.Service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.Service.UserService;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -13,19 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UsersController {
 
     private final RoleRepository roleRepository;
-    private final RoleService roleService;
+    private final RoleServiceImpl roleServiceImpl;
     private UserService userService;
 
-    public UsersController(RoleService roleService, RoleRepository roleRepository) {
-        this.roleService = roleService;
+    public UsersController(RoleServiceImpl roleServiceImpl, RoleRepository roleRepository) {
+        this.roleServiceImpl = roleServiceImpl;
         this.roleRepository = roleRepository;
     }
 
@@ -34,7 +30,7 @@ public class UsersController {
         this.userService = userService;
     }
 
-    @GetMapping("/adminpage")
+    @GetMapping("/admin")
     public String pageForadmin(ModelMap model){
 
         List<User> allUsers = userService.findAll();
@@ -42,7 +38,7 @@ public class UsersController {
         return "admin";
     }
 
-        @GetMapping("/adminpage/showAllUsers")
+        @GetMapping("/admin/showAllUsers")
         public String showAllUsers(ModelMap model) {
 
             List<User> allUsers = userService.findAll();
@@ -50,22 +46,24 @@ public class UsersController {
             return "users";
         }
 
-        @GetMapping("/adminpage/addNewUser")
+        @GetMapping("/admin/addNewUser")
         public String addNewUser(ModelMap model){
 
             User user = new User();
-            model.addAttribute("userSave", user);
+            List<Role> allroles = roleRepository.findAll();
+            model.addAttribute("userSave",user);
+            model.addAttribute("allRoles", allroles);
             return "user-info";
         }
 
-        @PostMapping("/adminpage/saveUser")
+        @PostMapping("/admin/saveUser")
         public String saveUser(@ModelAttribute("userSave") User user ){
             
             userService.save(user);
-            return "redirect:/adminpage";
+            return "redirect:/admin";
         }
 
-        @RequestMapping("/adminpage/updateUser")
+        @RequestMapping("/admin/updateUser")
         public String updateUser(@RequestParam("userId") int id,ModelMap model){
 
             User user = userService.getUser(id);
@@ -75,22 +73,28 @@ public class UsersController {
             return "user-info";
         }
 
-        @RequestMapping("/adminpage/deleteUser")
+        @RequestMapping("/admin/deleteUser")
         public String deleteUser(@RequestParam("userId") int id){
 
             userService.deleteById(id);
-            return "redirect:/adminpage";
+            return "redirect:/admin";
         }
 
-        @GetMapping("/userdetails")
+        @GetMapping("/user")
         public String usersDetails(ModelMap model, Principal principal) {
             if (principal != null) {
                 String username = principal.getName();
                 User user = userService.findByUsername(username);
                 model.addAttribute("user", user);
             }
-            return "userdetails";
+            return "user";
         }
+
+
+    @GetMapping("/login")
+    public String login() {
+        return "login"; // Возвращает шаблон login.html
+    }
 }
 
 

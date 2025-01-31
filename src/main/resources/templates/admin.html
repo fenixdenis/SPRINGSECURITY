@@ -7,10 +7,17 @@
 <h2>Админ панель</h2>
 
 <ul>
-  <li><a th:href="@{/adminpage/showAllUsers}">Показать всех пользователей</a></li>
-  <li><a th:href="@{/adminpage/addNewUser}">Добавить нового пользователя</a></li>
+  <li><a th:href="@{/admin/showAllUsers}">Показать всех пользователей</a></li>
+  <li><a th:href="@{/admin/addNewUser}">Добавить нового пользователя</a></li>
 </ul>
 
-<a href="/userdetails">На главную</a>
+<a href="/user">На главную</a>
+<!-- Форма для выхода из системы -->
+<form th:action="@{/logout}" method="post">
+  <input type="hidden"
+         th:name="${_csrf.parameterName}"
+         th:value="${_csrf.token}"/>
+  <input type="submit" value="Logout"/>
+</form>
 </body>
 </html>
